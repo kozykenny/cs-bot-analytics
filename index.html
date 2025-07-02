@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS Bot Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      min-height: 100vh;
+      height: 100vh;
+      background: url('bg-futuristic.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Orbitron', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dashboard {
+      background: rgba(10, 15, 40, 0.85);
+      border-radius: 20px;
+      box-shadow: 0 0 40px 8px #00f0ff44, 0 0 0 2px #00f0ff55;
+      padding: 48px 32px 28px 32px;
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      border: 2px solid #00f0ff;
+      backdrop-filter: blur(2px);
+      min-height: 540px;
+      justify-content: center;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #00f0ff;
+      margin-bottom: 36px;
+      letter-spacing: 2px;
+      text-align: center;
+      text-shadow: 0 0 8px #00f0ff, 0 0 24px #00f0ff99;
+    }
+    .stats {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      margin-bottom: 18px;
+    }
+    .stat-card {
+      background: rgba(20, 30, 60, 0.85);
+      border-radius: 14px;
+      box-shadow: 0 0 16px 2px #00f0ff33, 0 0 0 1.5px #00f0ff55;
+      padding: 26px 18px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      border: 1.5px solid #00f0ff;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+    .stat-card:hover {
+      box-shadow: 0 0 32px 8px #00f0ff99, 0 0 0 2.5px #00f0ff;
+      border: 2.5px solid #00f0ff;
+    }
+    .stat-icon {
+      font-size: 2.3rem;
+      color: #00f0ff;
+      width: 48px;
+      text-align: center;
+      filter: drop-shadow(0 0 8px #00f0ff);
+    }
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-title {
+      font-size: 1.12rem;
+      color: #b2f7ff;
+      font-weight: 600;
+      margin-bottom: 2px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 4px #00f0ff99;
+    }
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px #00f0ff, 0 0 32px #00f0ff99;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 18px;
+      color: #b2f7ff;
+      font-size: 1.05rem;
+      text-shadow: 0 0 4px #00f0ff99;
+    }
+    .footer a {
+      color: #00f0ff;
+      text-decoration: none;
+      transition: text-decoration 0.2s;
+    }
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    .error {
+      color: #ff3c3c;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      text-align: center;
+      text-shadow: 0 0 8px #ff3c3c99;
+    }
+    @media (max-width: 500px) {
+      .dashboard { padding: 18px 2px 12px 2px; min-height: 0; }
+      h1 { font-size: 1.3rem; }
+      .stat-card { padding: 12px 6px; }
+      .stat-title { font-size: 0.98rem; }
+      .stat-value { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>CS Bot Analytics</h1>
+    <div class="stats">
+      <div class="stat-card">
+        <span class="stat-icon">💬</span>
+        <div class="stat-info">
+          <span class="stat-title">Total Messages Replied</span>
+          <span class="stat-value" id="repliedCount">...</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">👤</span>
+        <div class="stat-info">
+          <span class="stat-title">Total Unique Customers</span>
+          <span class="stat-value" id="uniqueCustomers">...</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">✅</span>
+        <div class="stat-info">
+          <span class="stat-title">Total Bookings Finished</span>
+          <span class="stat-value" id="bookingsFinished">...</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      Data from <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxn3XKXCyfhssB2-W04zzeTE31RQNa9AGKJbwwUG8IdMEop4dzwTPe1A4-MoId7DcDvYGQJY3NDcME/pub?gid=0&single=true&output=csv" target="_blank">Google Sheet</a>
+    </div>
+    <div class="error" id="errorMsg"></div>
+  </div>
+  <script>
+    // Direct CSV links for each sheet
+    const normalMessagesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxn3XKXCyfhssB2-W04zzeTE31RQNa9AGKJbwwUG8IdMEop4dzwTPe1A4-MoId7DcDvYGQJY3NDcME/pub?gid=0&single=true&output=csv';
+    const bookingConfirmationUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxn3XKXCyfhssB2-W04zzeTE31RQNa9AGKJbwwUG8IdMEop4dzwTPe1A4-MoId7DcDvYGQJY3NDcME/pub?gid=237119173&single=true&output=csv';
+
+    function parseCSV(text) {
+      // Simple CSV parser for this use case
+      const lines = text.split('\n').filter(Boolean);
+      return lines.map(line => {
+        // Handle quoted commas
+        const cells = [];
+        let cell = '';
+        let inQuotes = false;
+        for (let i = 0; i < line.length; i++) {
+          const char = line[i];
+          if (char === '"') {
+            inQuotes = !inQuotes;
+          } else if (char === ',' && !inQuotes) {
+            cells.push(cell);
+            cell = '';
+          } else {
+            cell += char;
+          }
+        }
+        cells.push(cell);
+        return cells;
+      });
+    }
+
+    // Fetch normal messages for replied/unique
+    fetch(normalMessagesUrl)
+      .then(res => res.text())
+      .then(csvText => {
+        const rows = parseCSV(csvText);
+        if (rows.length < 2) throw new Error('No data found in normal messages');
+        const header = rows[0];
+        const colIdx = {
+          userId: header.findIndex(h => h.trim().toLowerCase() === 'user id'),
+          response: header.findIndex(h => h.trim().toLowerCase() === 'response'),
+        };
+        const dataRows = rows.slice(1);
+
+        // Total messages replied: non-empty response
+        const repliedCount = dataRows.filter(row => row[colIdx.response] && row[colIdx.response].trim() !== '').length;
+
+        // Total unique customers: unique user id
+        const uniqueUsers = new Set();
+        dataRows.forEach(row => {
+          const uid = row[colIdx.userId];
+          if (uid && uid.trim() !== '') uniqueUsers.add(uid.trim());
+        });
+
+        document.getElementById('repliedCount').textContent = repliedCount;
+        document.getElementById('uniqueCustomers').textContent = uniqueUsers.size;
+      })
+      .catch(err => {
+        document.getElementById('repliedCount').textContent = 'Error';
+        document.getElementById('uniqueCustomers').textContent = 'Error';
+        document.getElementById('errorMsg').textContent = 'Failed to load normal messages: ' + err.message;
+      });
+
+    // Fetch booking confirmation for bookings finished
+    fetch(bookingConfirmationUrl)
+      .then(res => res.text())
+      .then(csvText => {
+        const rows = parseCSV(csvText);
+        // Subtract 1 for header row
+        const bookingsFinished = Math.max(0, rows.length - 1);
+        document.getElementById('bookingsFinished').textContent = bookingsFinished;
+      })
+      .catch(err => {
+        document.getElementById('bookingsFinished').textContent = 'Error';
+        document.getElementById('errorMsg').textContent = 'Failed to load booking confirmations: ' + err.message;
+      });
+  </script>
+</body>
+</html> 
