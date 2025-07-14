@@ -15,10 +15,7 @@
       min-height: 100vh;
       height: 100vh;
       font-family: 'Orbitron', Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      overflow-x: hidden;
       background: #000; /* fallback */
     }
     #bg-video {
@@ -28,55 +25,68 @@
       height: 100vh;
       object-fit: cover;
       z-index: -1;
-      opacity: 0.7; /* Adjust for more/less visibility */
-      pointer-events: none; /* So clicks go through to your dashboard */
+      opacity: 0.7;
+      pointer-events: none;
     }
-    .dashboard {
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-rows: auto;
+      gap: 32px;
+      width: 100vw;
+      max-width: 1200px;
+      margin: 48px auto 32px auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+    }
+    .dashboard-card {
       background: rgba(10, 15, 40, 0.85);
       border-radius: 20px;
       box-shadow: 0 0 40px 8px #00f0ff44, 0 0 0 2px #00f0ff55;
-      padding: 48px 32px 28px 32px;
-      max-width: 420px;
-      width: 100%;
+      padding: 32px 24px 24px 24px;
+      border: 2px solid #00f0ff;
+      backdrop-filter: blur(2px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      position: relative;
-      border: 2px solid #00f0ff;
-      backdrop-filter: blur(2px);
-      min-height: 540px;
-      justify-content: center;
+      min-width: 0;
+      min-height: 120px;
+      transition: box-shadow 0.22s, border 0.22s, transform 0.18s;
+      will-change: box-shadow, border, transform;
     }
-    h1 {
+    .dashboard-card:hover {
+      box-shadow: 0 0 80px 24px #00f0ff99, 0 0 0 4px #00f0ff;
+      border-color: #fff;
+      transform: translateY(-6px) scale(1.03);
+    }
+    .dashboard-card h1 {
       font-size: 2.2rem;
       font-weight: 700;
       color: #00f0ff;
-      margin-bottom: 36px;
+      margin-bottom: 24px;
       letter-spacing: 2px;
       text-align: center;
       text-shadow: 0 0 8px #00f0ff, 0 0 24px #00f0ff99;
-    }
-    .stats {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      margin-bottom: 18px;
     }
     .stat-card {
       background: rgba(20, 30, 60, 0.85);
       border-radius: 14px;
       box-shadow: 0 0 16px 2px #00f0ff33, 0 0 0 1.5px #00f0ff55;
-      padding: 26px 18px;
+      padding: 18px 12px;
       display: flex;
       align-items: center;
       gap: 18px;
       border: 1.5px solid #00f0ff;
-      transition: box-shadow 0.2s, border 0.2s;
+      transition: box-shadow 0.22s, border 0.22s, transform 0.18s;
+      will-change: box-shadow, border, transform;
+      width: 100%;
+      margin-bottom: 16px;
     }
+    .stat-card:last-child { margin-bottom: 0; }
     .stat-card:hover {
-      box-shadow: 0 0 32px 8px #00f0ff99, 0 0 0 2.5px #00f0ff;
-      border: 2.5px solid #00f0ff;
+      box-shadow: 0 0 48px 12px #00f0ff99, 0 0 0 3px #00f0ff;
+      border-color: #fff;
+      transform: translateY(-4px) scale(1.025);
     }
     .stat-icon {
       font-size: 2.3rem;
@@ -126,28 +136,293 @@
       text-align: center;
       text-shadow: 0 0 8px #ff3c3c99;
     }
+    .charts-panel h2 {
+      color: #b2f7ff;
+      font-size: 1.1rem;
+      text-shadow: 0 0 4px #00f0ff99;
+      margin-bottom: 8px;
+      margin-top: 0;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
     @media (max-width: 500px) {
-      .dashboard { padding: 18px 2px 12px 2px; min-height: 0; }
-      h1 { font-size: 1.3rem; }
+      .dashboard-card, .charts-panel { padding: 12px 2px 8px 2px; min-height: 0; }
+      .dashboard-card h1 { font-size: 1.3rem; }
       .stat-card { padding: 12px 6px; }
       .stat-title { font-size: 0.98rem; }
       .stat-value { font-size: 1.3rem; }
+    }
+    .section-divider {
+      width: 100vw;
+      max-width: 1200px;
+      margin: 0 auto 24px auto;
+      padding: 0 16px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .section-divider h2 {
+      width: 100%;
+      text-align: center;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: #00f0ff;
+      letter-spacing: 2px;
+      margin: 0;
+      padding: 18px 0 10px 0;
+      border-radius: 18px;
+      background: rgba(10, 15, 40, 0.92);
+      box-shadow: 0 0 32px 8px #00f0ff44, 0 0 0 2.5px #00f0ff99;
+      text-shadow: 0 0 16px #00f0ff, 0 0 32px #00f0ff99;
+      border: 2.5px solid #00f0ff;
+      position: relative;
+      z-index: 2;
+    }
+    #category-section > div {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px 24px;
+      width: 100%;
+    }
+    #category-section .category-card {
+      background: rgba(10,15,40,0.92);
+      border-radius: 18px;
+      box-shadow: 0 0 24px 4px #00f0ff33, 0 0 0 2px #00f0ff55;
+      border: 2px solid #00f0ff;
+      padding: 28px 22px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
+      min-height: 160px;
+      transition: box-shadow 0.22s, border 0.22s, transform 0.18s;
+      will-change: box-shadow, border, transform;
+    }
+    #category-section .category-card:hover {
+      box-shadow: 0 0 48px 12px #00f0ff99, 0 0 0 3px #00f0ff;
+      border-color: #fff;
+      transform: translateY(-4px) scale(1.025);
+    }
+    #category-section .category-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #00f0ff;
+      text-shadow: 0 0 8px #00f0ff,0 0 24px #00f0ff99;
+      margin-bottom: 8px;
+    }
+    #category-section .category-count {
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px #00f0ff, 0 0 32px #00f0ff99;
+      margin-bottom: 10px;
+    }
+    #category-section ul {
+      margin: 0 0 0 12px;
+      padding: 0 0 0 0.5em;
+      color: #b2f7ff;
+      font-size: 1.05rem;
+    }
+    @media (max-width: 900px) {
+      .section-divider h2 { font-size: 1.3rem; padding: 10px 0 6px 0; }
+      #category-section > div { gap: 16px 8px; }
+    }
+    @media (max-width: 500px) {
+      .section-divider h2 { font-size: 1.05rem; padding: 7px 0 4px 0; }
+      #category-section > div { grid-template-columns: 1fr; gap: 10px 0; }
+      #category-section .category-card { padding: 12px 6px; min-height: 0; }
+    }
+    #before-after-section {
+      margin-top: 0;
+    }
+    .before-after-columns {
+      align-items: stretch;
+      display: flex;
+      gap: 32px;
+      width: 100%;
+      justify-content: center;
+      position: relative;
+    }
+    .before-after-divider {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .before-after-divider-line {
+      position: absolute;
+      left: -1px;
+      top: 0; bottom: 0;
+      width: 2.5px;
+      background: linear-gradient(180deg, #00f0ff 0%, #00f0ff99 100%);
+      box-shadow: 0 0 24px 6px #00f0ff66;
+      border-radius: 2px;
+      opacity: 0.85;
+      height: 100%;
+    }
+    .before-after-col {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 50%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .before-after-section-title {
+      text-align: center;
+      font-size: 1.25rem;
+      color: #b2f7ff;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    .before-after-card {
+      background: rgba(10,15,40,0.92);
+      border-radius: 18px;
+      box-shadow: 0 0 24px 4px #00f0ff33, 0 0 0 2px #00f0ff55;
+      border: 2px solid #00f0ff;
+      transition: box-shadow 0.22s, border 0.22s, transform 0.18s;
+      will-change: box-shadow, border, transform;
+      padding: 28px 18px 18px 18px;
+      margin-bottom: 0;
+    }
+    .before-after-card:hover {
+      box-shadow: 0 0 48px 12px #00f0ff99, 0 0 0 3px #00f0ff;
+      border-color: #fff;
+      transform: translateY(-4px) scale(1.025);
+    }
+    .before-after-category {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #00f0ff;
+      text-shadow: 0 0 8px #00f0ff,0 0 24px #00f0ff99;
+      letter-spacing: 1px;
+      flex: 1 1 auto;
+      white-space: pre-line;
+      margin-right: 0.5em;
+    }
+    .before-after-count {
+      font-size: 2.6rem;
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 12px #00f0ff, 0 0 32px #00f0ff99;
+      flex-shrink: 0;
+      min-width: 48px;
+      text-align: right;
+      margin-left: 0.5em;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .before-after-messages {
+      margin: 0 0 0 12px;
+      padding: 0 0 0 0.5em;
+      color: #b2f7ff;
+      font-size: 1.05rem;
+    }
+    @media (max-width: 900px) {
+      .before-after-col { gap: 12px; }
+      .before-after-card { padding: 14px 6px 10px 6px; }
+      .before-after-category { font-size: 1.05rem; }
+    }
+    @media (max-width: 600px) {
+      .before-after-columns { flex-direction: column; gap: 18px; }
+      .before-after-col { max-width: 100%; }
+    }
+    .before-after-arrow-col {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px;
+      max-width: 48px;
+      padding: 0 8px;
+      height: 100%;
+    }
+    .before-after-arrow-stack {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      min-height: 100%;
+      pointer-events: none;
+    }
+    .before-after-arrow {
+      font-size: 2.2rem;
+      color: #00f0ff;
+      text-shadow: 0 0 12px #00f0ff, 0 0 32px #00f0ff99;
+      line-height: 1.1;
+      user-select: none;
+    }
+    @media (max-width: 900px) {
+      .before-after-arrow { font-size: 1.4rem; }
+      .before-after-arrow-col { min-width: 18px; max-width: 24px; }
+    }
+    @media (max-width: 600px) {
+      .before-after-arrow-col { display: none; }
+    }
+    .before-after-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 8px;
+      gap: 0;
     }
   </style>
 </head>
 <body>
   <video autoplay loop muted playsinline id="bg-video">
-    <source src="0703.mov" type="video/mp4">
+    <source src="0703.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-  <div class="dashboard">
-    <h1>CS Bot Analytics</h1>
-    <div class="stats">
+  <script>
+    // Skip the first second to avoid black frame
+    document.addEventListener('DOMContentLoaded', function() {
+      var video = document.getElementById('bg-video');
+      video.addEventListener('loadedmetadata', function() {
+        if (video.currentTime < 1) {
+          video.currentTime = 1;
+        }
+      });
+    });
+  </script>
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <h1>CS Bot Analytics</h1>
       <div class="stat-card">
         <span class="stat-icon">💬</span>
         <div class="stat-info">
           <span class="stat-title">Total Messages Replied</span>
           <span class="stat-value" id="repliedCount">...</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⏱️</span>
+        <div class="stat-info">
+          <span class="stat-title">Total Time Saved (hours)</span>
+          <span class="stat-value" id="timeSaved">...</span>
+          <span style="font-size:0.85rem;color:#b2f7ff;margin-top:2px;display:block;">
+            <a href="https://www.helpscout.com/helpu/email-customer-service-whats-an-acceptable-reply-time/" target="_blank" style="color:#00f0ff;text-decoration:underline;">2 min per quick reply</a> &nbsp;|&nbsp;
+            <a href="https://www.gorgias.com/blog/average-response-time" target="_blank" style="color:#00f0ff;text-decoration:underline;">5 min per booking/complex</a>
+          </span>
         </div>
       </div>
       <div class="stat-card">
@@ -164,12 +439,42 @@
           <span class="stat-value" id="bookingsFinished">...</span>
         </div>
       </div>
+      <div class="stat-card">
+        <span class="stat-icon">🟢</span>
+        <div class="stat-info">
+          <span class="stat-title">Active Users (24h / 7d / 30d)</span>
+          <span class="stat-value" id="activeUsers">... / ... / ...</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📈</span>
+        <div class="stat-info">
+          <span class="stat-title">Booking Conversion Rate</span>
+          <span class="stat-value" id="conversionRate">...</span>
+          <span style="font-size:0.95rem;color:#b2f7ff;margin-top:2px;display:block;">Of everyone who pressed 🗓 Book a Girl, this is the percent who finished a booking.</span>
+        </div>
+      </div>
+      <div class="footer">
+        Data from <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxn3XKXCyfhssB2-W04zzeTE31RQNa9AGKJbwwUG8IdMEop4dzwTPe1A4-MoId7DcDvYGQJY3NDcME/pub?gid=0&single=true&output=csv" target="_blank">Google Sheet</a>
+      </div>
+      <div class="error" id="errorMsg"></div>
     </div>
-    <div class="footer">
-      Data from <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQxn3XKXCyfhssB2-W04zzeTE31RQNa9AGKJbwwUG8IdMEop4dzwTPe1A4-MoId7DcDvYGQJY3NDcME/pub?gid=0&single=true&output=csv" target="_blank">Google Sheet</a>
+    <div class="dashboard-card charts-panel">
+      <h2>Peak Activity by Hour</h2>
+      <div id="hourlyChart" style="width:100%;height:120px;"></div>
+      <h2 style="margin-top:24px;">Messages by Weekday</h2>
+      <div id="weekdayChart" style="width:100%;height:120px;"></div>
+      <h2 style="margin-top:24px;">Messages by Day (Last 30 Days)</h2>
+      <div id="dailyChart" style="width:100%;height:120px;"></div>
+      <h2 style="margin-top:24px;">Most Frequent Customer Request</h2>
+      <canvas id="conversionPie" width="220" height="120" style="width:100%;max-width:220px;display:block;margin:0 auto;"></canvas>
     </div>
-    <div class="error" id="errorMsg"></div>
   </div>
+  <!-- Category section removed -->
+  <div class="section-divider">
+    <h2>Frequent Customer Messages <br>Before vs After CS Bot Update</h2>
+  </div>
+  <div id="before-after-section" style="width:100vw;max-width:1200px;margin:0 auto 48px auto;padding:0 16px;box-sizing:border-box;"></div>
   <script>
     // Direct CSV links for each sheet
     const normalMessagesUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQxn3XKXCyfhssB2-W04zzeTE31RQNa9AGKJbwwUG8IdMEop4dzwTPe1A4-MoId7DcDvYGQJY3NDcME/pub?gid=0&single=true&output=csv';
@@ -199,7 +504,107 @@
       });
     }
 
-    // Fetch normal messages for replied/unique
+    // --- Helper: Parse timestamp in both formats ---
+    function parseTimestamp(ts) {
+      if (!ts) return null;
+      // Try ISO format first
+      let d = Date.parse(ts);
+      if (!isNaN(d)) return new Date(d);
+      // Try 'YYYY/MM/DD HH:mm:ss' format
+      const match = ts.match(/(\d{4})[\/-](\d{2})[\/-](\d{2})[ T](\d{1,2}):(\d{2})(?::(\d{2}))?/);
+      if (match) {
+        const [_, y, m, d2, h, min, s] = match;
+        // Always treat as JST (UTC+9)
+        const year = Number(y);
+        const month = Number(m) - 1;
+        const day = Number(d2);
+        const hour = Number(h);
+        const minute = Number(min);
+        const second = s ? Number(s) : 0;
+        // Create a Date as if it's UTC, then subtract 9 hours to get UTC time
+        const utc = Date.UTC(year, month, day, hour - 9, minute, second);
+        return new Date(utc);
+      }
+      return null;
+    }
+
+    // --- Visualization helpers (modern colors, upward bars, improved labels) ---
+    function renderBarChart(containerId, data, labels, color, options = {}) {
+      const max = Math.max(...data, 1);
+      const barWidth = 100 / data.length;
+      const showEvery = options.showEvery || 1;
+      const rotateLabels = options.rotateLabels || false;
+      const fontSize = options.fontSize || '0.8rem';
+      const labelColor = options.labelColor || '#b2b7c6';
+      const labelBelow = options.labelBelow || false;
+      const bars = data.map((v, i) => {
+        const showLabel = i % showEvery === 0;
+        return `
+          <div style="display:inline-block;width:${barWidth}%;height:100%;vertical-align:bottom;">
+            <div style="height:${(v / max) * 90}%;background:${color};border-radius:4px 4px 0 0;box-shadow:0 2px 8px ${color}33;"></div>
+            ${labelBelow ? '' : `<div style=\"text-align:center;font-size:${fontSize};color:${labelColor};margin-top:2px;${rotateLabels && showLabel ? 'transform:rotate(-35deg);' : ''}white-space:nowrap;overflow:visible;\">${showLabel ? labels[i] : ''}</div>`}
+          </div>
+        `;
+      }).join('');
+      let labelRow = '';
+      if (labelBelow) {
+        labelRow = `<div style='display:flex;align-items:flex-start;margin-top:6px;'>` +
+          data.map((_, i) => {
+            const showLabel = i % showEvery === 0;
+            return `<div style='width:${barWidth}%;text-align:center;font-size:${fontSize};color:${labelColor};${rotateLabels && showLabel ? 'transform:rotate(-35deg);' : ''}white-space:nowrap;overflow:visible;'>${showLabel ? labels[i] : ''}</div>`;
+          }).join('') + '</div>';
+      }
+      document.getElementById(containerId).innerHTML = `<div style='height:90px;display:flex;align-items:flex-end;'>${bars}</div>${labelRow}`;
+    }
+
+    // --- Draw Most Frequent Messages Pie Chart ---
+    function drawMessagesPie(messageCounts, total) {
+      const canvas = document.getElementById('conversionPie');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (total === 0) return;
+      const cx = canvas.width / 2, cy = canvas.height / 2 - 8, r = 48;
+      let start = -Math.PI / 2;
+      const colors = ['#4f8cff', '#ffb347', '#7ed957', '#e0e7ef', '#ff6f91', '#6fafff', '#b2b7c6'];
+      let i = 0;
+      let legend = [];
+      for (const {label, count} of messageCounts) {
+        const angle = (count / total) * 2 * Math.PI;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, start + angle);
+        ctx.closePath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.shadowColor = colors[i % colors.length] + '99';
+        ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.restore();
+        legend.push({color: colors[i % colors.length], label, count, percent: ((count/total)*100).toFixed(1)});
+        start += angle;
+        i++;
+      }
+      // White border
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = '#b2b7c6';
+      ctx.shadowColor = '#4f8cff44';
+      ctx.shadowBlur = 6;
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      // Legend below chart
+      let legendHtml = `<div style='display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:8px;font-size:0.85rem;color:#fff;'>`;
+      legend.forEach((item, idx) => {
+        legendHtml += `<span style='display:flex;align-items:center;gap:4px;'><span style='display:inline-block;width:12px;height:12px;border-radius:50%;background:${item.color};'></span>${item.label.length > 18 ? item.label.slice(0,15)+'…' : item.label} <span style='color:#b2f7ff;margin-left:2px;'>${item.percent}%</span></span>`;
+      });
+      legendHtml += '</div>';
+      canvas.nextElementSibling && (canvas.nextElementSibling.outerHTML = '');
+      canvas.insertAdjacentHTML('afterend', legendHtml);
+    }
+
+    // --- Fetch normal messages for replied/unique and new analytics ---
     fetch(normalMessagesUrl)
       .then(res => res.text())
       .then(csvText => {
@@ -208,30 +613,134 @@
         const header = rows[0];
         const colIdx = {
           userId: header.findIndex(h => h.trim().toLowerCase() === 'user id'),
+          user: header.findIndex(h => h.trim().toLowerCase() === 'user'),
           response: header.findIndex(h => h.trim().toLowerCase() === 'response'),
+          timestamp: header.findIndex(h => h.trim().toLowerCase() === 'timestamp'),
+          messageContent: header.findIndex(h => h.trim().toLowerCase() === 'message content'),
         };
         const dataRows = rows.slice(1);
 
-        // Total messages replied: non-empty response
-        const repliedCount = dataRows.filter(row => row[colIdx.response] && row[colIdx.response].trim() !== '').length;
+        // Total messages replied: count only rows with correct columns and non-empty message content
+        const validRows = dataRows.filter(row => row.length === header.length && row[colIdx.messageContent] && row[colIdx.messageContent].trim() !== '');
+        const repliedCount = validRows.length;
 
-        // Total unique customers: unique user id
+        // Total unique customers: unique user id or user
         const uniqueUsers = new Set();
         dataRows.forEach(row => {
-          const uid = row[colIdx.userId];
+          let uid = row[colIdx.userId];
+          if (!uid || uid.trim() === '') {
+            uid = row[colIdx.user];
+          }
           if (uid && uid.trim() !== '') uniqueUsers.add(uid.trim());
         });
 
+        // --- Active Users ---
+        const now = new Date();
+        const users24h = new Set();
+        const users7d = new Set();
+        const users30d = new Set();
+        dataRows.forEach(row => {
+          let uid = row[colIdx.userId];
+          if (!uid || uid.trim() === '') {
+            uid = row[colIdx.user];
+          }
+          const ts = parseTimestamp(row[colIdx.timestamp]);
+          if (!uid || !ts) return;
+          const diffMs = now - ts;
+          if (diffMs >= 0 && diffMs < 24 * 60 * 60 * 1000) {
+            users24h.add(uid);
+          }
+          if (diffMs >= 0 && diffMs < 7 * 24 * 60 * 60 * 1000) users7d.add(uid);
+          if (diffMs >= 0 && diffMs < 30 * 24 * 60 * 60 * 1000) users30d.add(uid);
+        });
+        document.getElementById('activeUsers').textContent = `${users24h.size} / ${users7d.size} / ${users30d.size}`;
+
+        // --- Peak Activity by Hour ---
+        const hours = Array(24).fill(0);
+        const weekdays = Array(7).fill(0);
+        const dailyCounts = {};
+        dataRows.forEach(row => {
+          const ts = parseTimestamp(row[colIdx.timestamp]);
+          if (!ts) return;
+          hours[ts.getHours()]++;
+          weekdays[ts.getDay()]++;
+          // For daily chart (YYYY-MM-DD)
+          const dayKey = ts.getFullYear() + '-' + String(ts.getMonth()+1).padStart(2,'0') + '-' + String(ts.getDate()).padStart(2,'0');
+          dailyCounts[dayKey] = (dailyCounts[dayKey] || 0) + 1;
+        });
+        renderBarChart('hourlyChart', hours, Array.from({length:24}, (_,i)=>i), '#4f8cff', {fontSize:'0.75rem', labelColor:'#b2b7c6'});
+        renderBarChart('weekdayChart', weekdays, ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], '#ffb347', {fontSize:'0.8rem', labelColor:'#b2b7c6'});
+        // --- Messages by Day (last 30 days) ---
+        const last30Days = [];
+        const last30Labels = [];
+        for (let i = 29; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+          const key = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+          last30Labels.push((d.getMonth()+1) + '/' + d.getDate());
+          last30Days.push(dailyCounts[key] || 0);
+        }
+        renderBarChart('dailyChart', last30Days, last30Labels, '#7ed957', {showEvery:7, fontSize:'0.7rem', labelColor:'#b2b7c6', rotateLabels:true, labelBelow:true});
+
+        // --- Most Frequent Messages Pie ---
+        const bookingIntents = [
+          '💰 Check Pricing',
+          '💌 Option Pricing',
+          '🗓 Book a Girl',
+          '⚠️ Important Rules',
+          '👩 Talk to Real Staff',
+          '💕 How it Works',
+          '🚨 Start from Beginning'
+        ];
+        const msgCounts = {};
+        const bookingIntentUsers = new Set();
+        let quickReplyCount = 0;
+        let complexCount = 0;
+        let bookAGirlCount = 0;
+        dataRows.forEach(row => {
+          const msg = (row[colIdx.messageContent] || '').trim();
+          let uid = row[colIdx.userId];
+          if (!uid || uid.trim() === '') {
+            uid = row[colIdx.user];
+          }
+          if (!msg) return;
+          if (msg === '🗓 Book a Girl') {
+            bookAGirlCount++;
+          }
+          if (bookingIntents.includes(msg)) {
+            msgCounts[msg] = (msgCounts[msg] || 0) + 1;
+            if (uid && uid.trim() !== '') bookingIntentUsers.add(uid.trim());
+            quickReplyCount++;
+          } else {
+            complexCount++;
+          }
+        });
+        window.__bookAGirlCount = bookAGirlCount;
+        // Only include the 7 booking intent messages, in the specified order
+        const pieMsgs = bookingIntents
+          .filter(label => msgCounts[label])
+          .map(label => ({label, count: msgCounts[label]}));
+        const totalPie = pieMsgs.reduce((sum, m) => sum + m.count, 0);
+        drawMessagesPie(pieMsgs, totalPie);
+
         document.getElementById('repliedCount').textContent = repliedCount;
+        // Calculate and display total time saved (2 min per quick reply, 5 min per complex), show in hours
+        const timeSavedMin = (quickReplyCount * 2) + (complexCount * 5);
+        const timeSavedHours = (timeSavedMin / 60).toFixed(1);
+        document.getElementById('timeSaved').textContent = timeSavedHours;
         document.getElementById('uniqueCustomers').textContent = uniqueUsers.size;
+        updateConversionRateKPI();
       })
       .catch(err => {
         document.getElementById('repliedCount').textContent = 'Error';
         document.getElementById('uniqueCustomers').textContent = 'Error';
+        document.getElementById('activeUsers').textContent = 'Error';
+        document.getElementById('hourlyChart').innerHTML = '';
+        document.getElementById('weekdayChart').innerHTML = '';
+        document.getElementById('dailyChart').innerHTML = '';
         document.getElementById('errorMsg').textContent = 'Failed to load normal messages: ' + err.message;
       });
 
-    // Fetch booking confirmation for bookings finished
+    // --- Fetch booking confirmation for bookings finished and conversion rate ---
     fetch(bookingConfirmationUrl)
       .then(res => res.text())
       .then(csvText => {
@@ -239,11 +748,67 @@
         // Subtract 1 for header row
         const bookingsFinished = Math.max(0, rows.length - 1);
         document.getElementById('bookingsFinished').textContent = bookingsFinished;
+        // Store for conversion rate calculation
+        window.__bookingsFinished = bookingsFinished;
+        updateConversionRateKPI();
       })
       .catch(err => {
         document.getElementById('bookingsFinished').textContent = 'Error';
+        document.getElementById('conversionRate').textContent = 'Error';
         document.getElementById('errorMsg').textContent = 'Failed to load booking confirmations: ' + err.message;
+      });
+
+    // --- Helper to update conversion rate KPI ---
+    function updateConversionRateKPI() {
+      const bookAGirlCount = window.__bookAGirlCount;
+      const bookingsFinished = window.__bookingsFinished;
+      if (typeof bookAGirlCount === 'number' && typeof bookingsFinished === 'number') {
+        const rate = bookAGirlCount ? ((bookingsFinished / bookAGirlCount) * 100).toFixed(1) : '0.0';
+        document.getElementById('conversionRate').textContent = `${rate}%`;
+      }
+    }
+
+    // --- Render before/after CS bot update comparison ---
+    function renderBeforeAfterSection(data) {
+      // Separate before and after arrays, sort by count descending
+      const before = data.filter(row => row["before the CS bot update or not"] === "before update").sort((a,b)=>b.count-a.count);
+      const after = data.filter(row => row["before the CS bot update or not"] === "after update").sort((a,b)=>b.count-a.count);
+      // Determine the max number of cards to set arrow stack height
+      const maxCards = Math.max(before.length, after.length, 6);
+      let html = `<div class='before-after-columns'>`;
+      html += `<div class='before-after-col'><div class='before-after-section-title'>Before Update</div>`;
+      before.forEach(row => {
+        html += `<div class='before-after-card'>
+          <div class='before-after-card-header'>
+            <span class='before-after-category'>${row.category}</span>
+            <span class='before-after-count'>${row.count}</span>
+          </div>
+          <ul class='before-after-messages'>${row["top messages"].split('\n').map(msg => `<li>${msg}</li>`).join('')}</ul>
+        </div>`;
+      });
+      html += `</div>`;
+      // Vertical divider
+      html += `<div class='before-after-divider'><div class='before-after-divider-line'></div></div>`;
+      html += `<div class='before-after-col'><div class='before-after-section-title'>After Update</div>`;
+      after.forEach(row => {
+        html += `<div class='before-after-card'>
+          <div class='before-after-card-header'>
+            <span class='before-after-category'>${row.category}</span>
+            <span class='before-after-count'>${row.count}</span>
+          </div>
+          <ul class='before-after-messages'>${row["top messages"].split('\n').map(msg => `<li>${msg}</li>`).join('')}</ul>
+        </div>`;
+      });
+      html += `</div></div>`;
+      document.getElementById('before-after-section').innerHTML = html;
+    }
+
+    fetch('https://tokyogirlshub.app.n8n.cloud/webhook/cf41059f-1fb8-470e-b910-c554b70bc392')
+      .then(res => res.json())
+      .then(data => renderBeforeAfterSection(data))
+      .catch(() => {
+        document.getElementById('before-after-section').innerHTML = '';
       });
   </script>
 </body>
-</html>
+</html> 
