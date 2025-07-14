@@ -339,8 +339,37 @@
       .before-after-category { font-size: 1.05rem; }
     }
     @media (max-width: 600px) {
-      .before-after-columns { flex-direction: column; gap: 18px; }
-      .before-after-col { max-width: 100%; }
+      .before-after-columns {
+        flex-direction: column;
+        gap: 18px;
+        align-items: stretch;
+      }
+      .before-after-col {
+        max-width: 100%;
+        width: 100%;
+      }
+      .before-after-divider { display: none; }
+      .before-after-card-header {
+        flex-direction: row;
+        gap: 8px;
+      }
+      .before-after-category { font-size: 1rem; }
+      .before-after-count { font-size: 1.5rem; min-width: 32px; }
+      .before-after-card { padding: 10px 4px 8px 4px; }
+      .dashboard-card h1 { font-size: 1.1rem; }
+      .dashboard-card { padding: 8px 2px 8px 2px; min-height: 0; }
+      .stat-card { padding: 8px 2px; margin-bottom: 8px; }
+      .stat-title { font-size: 0.85rem; }
+      .stat-value { font-size: 1.1rem; }
+      .stat-icon { font-size: 1.3rem; width: 32px; }
+      .stat-info { font-size: 0.95rem; }
+      .section-divider h2 { font-size: 1rem; padding: 6px 0 2px 0; }
+      .charts-panel h2 { font-size: 0.9rem; }
+      .footer { font-size: 0.85rem; }
+      .dashboard-card, .charts-panel { margin-bottom: 10px; }
+      .dashboard-grid { gap: 10px; padding: 0 12px; }
+      .section-divider, #before-after-section { padding-left: 12px !important; padding-right: 12px !important; }
+      .dashboard-card, .charts-panel, .stat-card, .before-after-card { margin-left: 2px; margin-right: 2px; }
     }
     .before-after-arrow-col {
       position: relative;
