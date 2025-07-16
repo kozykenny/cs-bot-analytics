@@ -415,6 +415,156 @@
       margin-bottom: 8px;
       gap: 0;
     }
+    #quit-dashboard {
+      margin-top: 0;
+      margin-bottom: 32px;
+    }
+    .quit-summary-table {
+      width: 100%;
+      border-spacing: 0 12px;
+      border-collapse: separate;
+      margin: 0 auto 18px auto;
+      color: #b2f7ff;
+      font-size: 1.08rem;
+    }
+    .quit-summary-table th, .quit-summary-table td {
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .quit-summary-table th {
+      color: #00f0ff;
+      font-size: 1.12rem;
+      font-weight: 700;
+      text-shadow: 0 0 8px #00f0ff,0 0 24px #00f0ff99;
+    }
+    .quit-summary-table tr {
+      background: rgba(10,15,40,0.92);
+      border-radius: 12px;
+      box-shadow: 0 0 12px 2px #00f0ff33, 0 0 0 1.5px #00f0ff55;
+      border: 1.5px solid #00f0ff;
+    }
+    #quitPie {
+      width: 100%;
+      max-width: 320px;
+      display: block;
+      margin: 0 auto 18px auto;
+    }
+    #quit-debug {
+      margin-top: 0;
+      margin-bottom: 32px;
+      color: #b2f7ff;
+      font-size: 0.98rem;
+    }
+    .quit-debug-table {
+      width: 100%;
+      border-spacing: 0 8px;
+      border-collapse: separate;
+      margin: 0 auto 12px auto;
+      color: #b2f7ff;
+      font-size: 0.98rem;
+    }
+    .quit-debug-table th, .quit-debug-table td {
+      padding: 6px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .quit-debug-table th {
+      color: #00f0ff;
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-shadow: 0 0 8px #00f0ff,0 0 24px #00f0ff99;
+    }
+    .quit-debug-table tr {
+      background: rgba(10,15,40,0.92);
+      border-radius: 8px;
+      box-shadow: 0 0 8px 1px #00f0ff33, 0 0 0 1px #00f0ff55;
+      border: 1px solid #00f0ff;
+    }
+    .quit-debug-step {
+      color: #00f0ff;
+      font-weight: 600;
+    }
+    .quit-debug-msg {
+      color: #fff;
+      font-size: 0.97rem;
+      word-break: break-all;
+    }
+    .quit-slicer-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 18px 0 8px 0;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .quit-slicer-btn {
+      background: linear-gradient(90deg, #0ff 0%, #4f8cff 100%);
+      color: #001a2c;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      box-shadow: 0 0 16px 2px #00f0ff33, 0 0 0 1.5px #00f0ff55;
+      padding: 12px 24px 12px 18px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.13s, filter 0.18s;
+      outline: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .quit-slicer-btn:hover, .quit-slicer-btn.active {
+      background: linear-gradient(90deg, #00f0ff 0%, #fff 100%);
+      color: #001a2c;
+      box-shadow: 0 0 32px 8px #00f0ffcc, 0 0 0 3px #00f0ff;
+      transform: translateY(-2px) scale(1.04);
+      filter: brightness(1.2) drop-shadow(0 0 16px #00f0ffcc);
+    }
+    .quit-slicer-btn.clear {
+      background: linear-gradient(90deg, #222 0%, #444 100%);
+      color: #b2f7ff;
+      border: 1.5px solid #00f0ff;
+      font-weight: 600;
+      box-shadow: none;
+      margin-left: 18px;
+    }
+    .quit-slicer-btn.clear:hover, .quit-slicer-btn.clear.active {
+      background: linear-gradient(90deg, #00f0ff 0%, #fff 100%);
+      color: #001a2c;
+      border: 1.5px solid #fff;
+    }
+    .quit-slicer-count {
+      background: #001a2c;
+      color: #00f0ff;
+      border-radius: 8px;
+      padding: 2px 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-left: 8px;
+      box-shadow: 0 0 8px #00f0ff44;
+    }
+    .quit-card-ui {
+      background: rgba(10, 15, 40, 0.92);
+      border-radius: 22px;
+      box-shadow: 0 0 40px 8px #00f0ff44, 0 0 0 2.5px #00f0ff99;
+      border: 2.5px solid #00f0ff;
+      padding: 32px 0 18px 0;
+      margin: 0 auto 36px auto;
+      max-width: 1240px;
+      width: 100vw;
+      position: relative;
+      z-index: 2;
+      transition: box-shadow 0.22s, border 0.22s, transform 0.18s;
+      will-change: box-shadow, border, transform;
+    }
+    .quit-card-ui:hover {
+      box-shadow: 0 0 80px 24px #00f0ff99, 0 0 0 4px #00f0ff;
+      border-color: #fff;
+      transform: translateY(-4px) scale(1.01);
+    }
   </style>
 </head>
 <body>
@@ -499,7 +649,14 @@
       <canvas id="conversionPie" width="220" height="120" style="width:100%;max-width:220px;display:block;margin:0 auto;"></canvas>
     </div>
   </div>
-  <!-- Category section removed -->
+  <div class="section-divider">
+    <h2>Where Customers Quit Booking</h2>
+  </div>
+  <div style="width:100vw;max-width:1200px;margin:0 auto 0 auto;padding:0 16px 0 16px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;">
+    <canvas id="quitPieLarge" width="600" height="320" style="width:100%;max-width:600px;min-height:320px;display:block;margin:0 auto 8px auto;"></canvas>
+  </div>
+  <div id="quit-dashboard" style="width:100vw;max-width:1200px;margin:0 auto 24px auto;padding:0 16px;box-sizing:border-box;"></div>
+  <div id="quit-debug" style="width:100vw;max-width:1200px;margin:0 auto 24px auto;padding:0 16px;box-sizing:border-box;"></div>
   <div class="section-divider">
     <h2>Frequent Customer Messages <br>Before vs After CS Bot Update</h2>
   </div>
@@ -837,6 +994,499 @@
       .then(data => renderBeforeAfterSection(data))
       .catch(() => {
         document.getElementById('before-after-section').innerHTML = '';
+      });
+
+    // --- Robust step detection for quit analysis ---
+    function detectQuitPoint(messages) {
+      // Steps in order, with robust regex/partial matching
+      const steps = [
+        { key: 'book', label: 'Book a Girl', match: m => /book a girl|🗓/i.test(m) },
+        { key: 'select', label: 'Girl/Schedule Selected', match: m => /girl selected|💕|schedule selected|📅/i.test(m) },
+        { key: 'girl', label: 'Girl Name Chosen', match: m => /girl chosen:|ako|momo|serena|yano kanon|[a-z]{3,} (chan|san)?|girl name/i.test(m) },
+        { key: 'visitdate', label: 'Visiting Date Chosen', match: m => /visiting date:\s*\d{4}-\d{2}-\d{2}/i.test(m) },
+        { key: 'datecourse', label: 'Date & Course Selection', match: m => /chosen date&time:|course:|time:|\d{4}-\d{2}-\d{2}\s*\d{1,2}:\d{2}/i.test(m) },
+        { key: 'option', label: 'Option Chosen', match: m => /optional services|no option|option|\[.*?\]|\{.*?\}|オプション|指名|premium|special|add|extra|vibrator|filming|masturbation/i.test(m) },
+        { key: 'confirm', label: 'Confirm', match: m => /confirmed\?:\s*(true|false)|confirm|ok|予約|確定|決定|完了|submit|send|done/i.test(m) }
+      ];
+      // --- New: Special case for lost at 2 options ---
+      const last2 = messages.slice(-2);
+      const isGirl = /girl selected|💕/i.test(last2[0]) || /girl selected|💕/i.test(last2[1]);
+      const isSched = /schedule selected|📅/i.test(last2[0]) || /schedule selected|📅/i.test(last2[1]);
+      if (last2.length === 2 && isGirl && isSched) {
+        // Make sure these are the last two messages (no other after)
+        return 'Lost at 2 options';
+      }
+      // --- New: Split confirm into succeeded/failed ---
+      if (messages.length && /confirmed\?:\s*true/i.test(messages[messages.length-1])) {
+        return 'Confirm Succeeded';
+      }
+      if (messages.length && /confirmed\?:\s*false/i.test(messages[messages.length-1])) {
+        return 'Confirm Failed';
+      }
+      // --- New: Split Girl/Schedule Selected ---
+      if (messages.length && /girl selected|💕/i.test(messages[messages.length-1])) {
+        return 'Girl Selected';
+      }
+      if (messages.length && /schedule selected|📅/i.test(messages[messages.length-1])) {
+        return 'Schedule Selected';
+      }
+      // If the last message matches confirm, always return 'Confirm'
+      if (messages.length && steps[steps.length-1].match(messages[messages.length-1])) {
+        return steps[steps.length-1].label;
+      }
+      return steps.reduce((acc, step, idx) => step.match(messages[messages.length-1]) ? step.label : acc, null) || (steps.find((_,i)=>messages.some(m=>steps[i].match(m)))?.label || 'Other');
+    }
+
+    // --- Improved booking attempt grouping by user and session ---
+    function renderQuitDashboard(dataRows, colIdx) {
+      // For debug: store all attempts and quit points
+      const debugAttempts = [];
+      // Group messages by chat id (column D)
+      const chatIdIdx = colIdx.chatId !== undefined ? colIdx.chatId : 3;
+      const chatMap = {};
+      dataRows.forEach(row => {
+        const chatId = row[chatIdIdx];
+        if (!chatId) return;
+        if (!chatMap[chatId]) chatMap[chatId] = [];
+        chatMap[chatId].push(row);
+      });
+      // Only include chat ids that have at least one '🗓 Book a Girl' message
+      const filteredChatMap = {};
+      Object.entries(chatMap).forEach(([cid, msgs]) => {
+        if (msgs.some(r => (r[colIdx.messageContent]||'').includes('🗓 Book a Girl'))) {
+          filteredChatMap[cid] = msgs;
+        }
+      });
+      // For each user, find booking attempts (start with Book a Girl), group by session (timestamp gap > 30min)
+      const quitCounts = {};
+      Object.entries(filteredChatMap).forEach(([cid, msgs]) => {
+        // Sort by timestamp if available
+        msgs.sort((a,b)=>{
+          const ta = a[colIdx.timestamp], tb = b[colIdx.timestamp];
+          return ta && tb ? ta.localeCompare(tb) : 0;
+        });
+        let attempt = [];
+        let lastTs = null;
+        for (let i = 0; i < msgs.length; i++) {
+          const m = msgs[i][colIdx.messageContent] || '';
+          const ts = msgs[i][colIdx.timestamp];
+          // If >30min gap, treat as new session
+          if (lastTs && ts) {
+            const t1 = new Date(lastTs).getTime(), t2 = new Date(ts).getTime();
+            if (!isNaN(t1) && !isNaN(t2) && t2-t1 > 30*60*1000 && attempt.length) {
+              // --- NEW: Only keep session if it contains a booking flow step ---
+              const hasBookingStep = attempt.some(r => {
+                const msg = (r[colIdx.messageContent]||'');
+                return /🗓|book a girl|💕|girl selected|📅|schedule selected/i.test(msg);
+              });
+              if (hasBookingStep) {
+                const quit = detectQuitPoint(attempt.map(r=>r[colIdx.messageContent]||''));
+                // Find the first valid customer message row in the attempt
+                const firstValid = attempt.find(r => {
+                  const u = r[colIdx.user];
+                  const t = r[colIdx.timestamp];
+                  if (!u || typeof u !== 'string') return false;
+                  const uLower = u.toLowerCase();
+                  if (uLower.includes('please come to our booth') || uLower.startsWith('/start') || uLower.includes('auto assistant')) return false;
+                  if (!t || typeof t !== 'string' || isNaN(Date.parse(t))) return false;
+                  return true;
+                });
+                if (firstValid) {
+                  const lastMsg = (attempt[attempt.length-1][colIdx.messageContent]||'').trim();
+                  // Filtering logic (same as debug table)
+                  const ignored = [
+                    '👩 Talk to Real Staff',
+                    '💌 Option Pricing',
+                    '💰 Check Pricing',
+                    '💕 How it Works',
+                    '⚠️ Important Rules',
+                    '🚨 Start from Beginning',
+                    '/start'
+                  ];
+                  if (!ignored.includes(lastMsg)) {
+                    // Special quit step filtering
+                    let valid = true;
+                    if (quit === 'Book a Girl' && lastMsg !== '🗓 Book a Girl') valid = false;
+                    if (quit === 'Confirm Succeeded' && !/confirmed\?:\s*true/i.test(lastMsg)) valid = false;
+                    if (quit === 'Confirm Failed' && !/confirmed\?:\s*false/i.test(lastMsg)) valid = false;
+                    if (quit === 'Girl Selected' && !/girl selected|💕/i.test(lastMsg)) valid = false;
+                    if (quit === 'Schedule Selected' && !/schedule selected|📅/i.test(lastMsg)) valid = false;
+                    if (quit === 'Lost at 2 options' && quit !== 'Lost at 2 options') valid = false;
+                    if (valid) {
+                      quitCounts[quit] = (quitCounts[quit]||0)+1;
+                      debugAttempts.push({
+                        uid: firstValid[colIdx.user],
+                        chatId: cid,
+                        ts: firstValid[colIdx.timestamp],
+                        quit,
+                        lastMsg
+                      });
+                    }
+                  }
+                }
+              }
+              attempt = [];
+            }
+          }
+          if (/book a girl|🗓/i.test(m) && attempt.length) {
+            // New booking attempt
+            const hasBookingStep = attempt.some(r => {
+              const msg = (r[colIdx.messageContent]||'');
+              return /🗓|book a girl|💕|girl selected|📅|schedule selected/i.test(msg);
+            });
+            if (hasBookingStep) {
+              const quit = detectQuitPoint(attempt.map(r=>r[colIdx.messageContent]||''));
+              // Find the first valid customer message row in the attempt
+              const firstValid = attempt.find(r => {
+                const u = r[colIdx.user];
+                const t = r[colIdx.timestamp];
+                if (!u || typeof u !== 'string') return false;
+                const uLower = u.toLowerCase();
+                if (uLower.includes('please come to our booth') || uLower.startsWith('/start') || uLower.includes('auto assistant')) return false;
+                if (!t || typeof t !== 'string' || isNaN(Date.parse(t))) return false;
+                return true;
+              });
+              if (firstValid) {
+                const lastMsg = (attempt[attempt.length-1][colIdx.messageContent]||'').trim();
+                // Filtering logic (same as debug table)
+                const ignored = [
+                  '👩 Talk to Real Staff',
+                  '💌 Option Pricing',
+                  '💰 Check Pricing',
+                  '💕 How it Works',
+                  '⚠️ Important Rules',
+                  '🚨 Start from Beginning',
+                  '/start'
+                ];
+                if (!ignored.includes(lastMsg)) {
+                  let valid = true;
+                  if (quit === 'Book a Girl' && lastMsg !== '🗓 Book a Girl') valid = false;
+                  if (quit === 'Confirm Succeeded' && !/confirmed\?:\s*true/i.test(lastMsg)) valid = false;
+                  if (quit === 'Confirm Failed' && !/confirmed\?:\s*false/i.test(lastMsg)) valid = false;
+                  if (quit === 'Girl Selected' && !/girl selected|💕/i.test(lastMsg)) valid = false;
+                  if (quit === 'Schedule Selected' && !/schedule selected|📅/i.test(lastMsg)) valid = false;
+                  if (quit === 'Lost at 2 options' && quit !== 'Lost at 2 options') valid = false;
+                  if (valid) {
+                    quitCounts[quit] = (quitCounts[quit]||0)+1;
+                    debugAttempts.push({
+                      uid: firstValid[colIdx.user],
+                      chatId: cid,
+                      ts: firstValid[colIdx.timestamp],
+                      quit,
+                      lastMsg
+                    });
+                  }
+                }
+              }
+            }
+            attempt = [];
+          }
+          attempt.push(msgs[i]);
+          lastTs = ts;
+        }
+        if (attempt.length) {
+          const hasBookingStep = attempt.some(r => {
+            const msg = (r[colIdx.messageContent]||'');
+            return /🗓|book a girl|💕|girl selected|📅|schedule selected/i.test(msg);
+          });
+          if (hasBookingStep) {
+            const quit = detectQuitPoint(attempt.map(r=>r[colIdx.messageContent]||''));
+            // Find the first valid customer message row in the attempt
+            const firstValid = attempt.find(r => {
+              const u = r[colIdx.user];
+              const t = r[colIdx.timestamp];
+              if (!u || typeof u !== 'string') return false;
+              const uLower = u.toLowerCase();
+              if (uLower.includes('please come to our booth') || uLower.startsWith('/start') || uLower.includes('auto assistant')) return false;
+              if (!t || typeof t !== 'string' || isNaN(Date.parse(t))) return false;
+              return true;
+            });
+            if (firstValid) {
+              const lastMsg = (attempt[attempt.length-1][colIdx.messageContent]||'').trim();
+              // Filtering logic (same as debug table)
+              const ignored = [
+                '👩 Talk to Real Staff',
+                '💌 Option Pricing',
+                '💰 Check Pricing',
+                '💕 How it Works',
+                '⚠️ Important Rules',
+                '🚨 Start from Beginning',
+                '/start'
+              ];
+              if (!ignored.includes(lastMsg)) {
+                let valid = true;
+                if (quit === 'Book a Girl' && lastMsg !== '🗓 Book a Girl') valid = false;
+                if (quit === 'Confirm Succeeded' && !/confirmed\?:\s*true/i.test(lastMsg)) valid = false;
+                if (quit === 'Confirm Failed' && !/confirmed\?:\s*false/i.test(lastMsg)) valid = false;
+                if (quit === 'Girl Selected' && !/girl selected|💕/i.test(lastMsg)) valid = false;
+                if (quit === 'Schedule Selected' && !/schedule selected|📅/i.test(lastMsg)) valid = false;
+                if (quit === 'Lost at 2 options' && quit !== 'Lost at 2 options') valid = false;
+                if (valid) {
+                  quitCounts[quit] = (quitCounts[quit]||0)+1;
+                  debugAttempts.push({
+                    uid: firstValid[colIdx.user],
+                    chatId: cid,
+                    ts: firstValid[colIdx.timestamp],
+                    quit,
+                    lastMsg
+                  });
+                }
+              }
+            }
+          }
+        }
+      });
+      // Prepare data for bar chart and table, EXCLUDE 'Other' and 'Confirm'
+      let quitLabels = Object.keys(quitCounts).filter(l => l !== 'Other' && l !== 'Confirm');
+      // Ensure Confirm Succeeded and Confirm Failed are next to each other and in order
+      const confirmIdx = quitLabels.findIndex(l => l === 'Confirm Succeeded');
+      const confirmFailIdx = quitLabels.findIndex(l => l === 'Confirm Failed');
+      if (confirmIdx !== -1 && confirmFailIdx !== -1 && Math.abs(confirmIdx - confirmFailIdx) !== 1) {
+        // Remove both and re-insert them next to each other at the earlier index
+        const minIdx = Math.min(confirmIdx, confirmFailIdx);
+        quitLabels = quitLabels.filter(l => l !== 'Confirm Succeeded' && l !== 'Confirm Failed');
+        quitLabels.splice(minIdx, 0, 'Confirm Succeeded', 'Confirm Failed');
+      }
+      const quitData = quitLabels.map(l=>quitCounts[l]);
+      // Bar chart
+      drawQuitBar(quitLabels, quitData);
+      // Table (now slicer)
+      let slicerHtml = `<div class='quit-slicer-container'>`;
+      quitLabels.forEach((l,i)=>{
+        slicerHtml += `<button class='quit-slicer-btn' data-step="${encodeURIComponent(l)}">${l} <span class='quit-slicer-count'>${quitData[i]}</span></button>`;
+      });
+      slicerHtml += `<button class='quit-slicer-btn clear' id='quitSlicerClear' style='margin-left:18px;'>Show All</button></div>`;
+      document.getElementById('quit-dashboard').innerHTML = `<canvas id='quitPie' width='220' height='120'></canvas>`+slicerHtml;
+      // Debug table (unchanged, but will filter)
+      let debugHtml = `<table class='quit-debug-table' id='quitDebugTable'><tr><th>User</th><th>Chat ID</th><th>Start Time</th><th>Quit Step</th><th>Last Message</th></tr>`;
+      const ignoreMsgs = [
+        '/start',
+        '💕 How it Works',
+        '⚠️ Important Rules',
+        '💌 Option Pricing',
+        '👩 Talk to Real Staff',
+        '🚨 Start from Beginning',
+        '💰 Check Pricing'
+      ];
+      const byChat = {};
+      debugAttempts.forEach(a => {
+        if (!byChat[a.chatId]) byChat[a.chatId] = [];
+        byChat[a.chatId].push(a);
+      });
+      let debugRows = [];
+      Object.values(byChat).forEach(attempts => {
+        attempts.sort((a, b) => new Date(a.ts) - new Date(b.ts));
+        let lastShown = null;
+        for (let i = 0; i < attempts.length; i++) {
+          const curr = attempts[i];
+          const currTime = new Date(curr.ts).getTime();
+          const next = attempts[i+1];
+          const nextTime = next ? new Date(next.ts).getTime() : null;
+          if (!next || (nextTime - currTime > 24*60*60*1000)) {
+            debugRows.push(curr);
+          }
+        }
+      });
+      function renderDebugTable(filterStep) {
+        let html = `<table class='quit-debug-table' id='quitDebugTable'><tr><th>User</th><th>Chat ID</th><th>Start Time</th><th>Quit Step</th><th>Last Message</th></tr>`;
+        debugRows.forEach(row => {
+          // Exclude rows with ignored lastMsg
+          const ignored = [
+            '👩 Talk to Real Staff',
+            '💌 Option Pricing',
+            '💰 Check Pricing',
+            '💕 How it Works',
+            '⚠️ Important Rules',
+            '🚨 Start from Beginning',
+            '/start'
+          ];
+          const lastMsg = (row.lastMsg||'').trim();
+          if (ignored.includes(lastMsg)) return;
+          // Don't show Lost at 2 options in Girl/Schedule Selected
+          if ((filterStep === 'Girl Selected' || filterStep === 'Schedule Selected') && row.quit === 'Lost at 2 options') return;
+          if (filterStep === 'Book a Girl') {
+            if (lastMsg !== '🗓 Book a Girl') return;
+          } else if (filterStep === 'Confirm Succeeded') {
+            if (!/confirmed\?:\s*true/i.test(lastMsg)) return;
+          } else if (filterStep === 'Confirm Failed') {
+            if (!/confirmed\?:\s*false/i.test(lastMsg)) return;
+          } else if (filterStep === 'Girl Selected') {
+            if (!/girl selected|💕/i.test(lastMsg)) return;
+          } else if (filterStep === 'Schedule Selected') {
+            if (!/schedule selected|📅/i.test(lastMsg)) return;
+          } else if (filterStep === 'Lost at 2 options') {
+            // Show only if quit is exactly 'Lost at 2 options'
+            if (row.quit !== 'Lost at 2 options') return;
+          } else if (filterStep && row.quit !== filterStep) {
+            return;
+          }
+          html += `<tr><td>${row.uid}</td><td>${row.chatId||''}</td><td>${row.ts||''}</td><td class='quit-debug-step'>${row.quit}</td><td class='quit-debug-msg'>${lastMsg}</td></tr>`;
+        });
+        // Add extra space at the end
+        html += `<tr><td colspan='5' style='height:48px;background:none;border:none;'></td></tr>`;
+        html += `</table>`;
+        document.getElementById('quit-debug').innerHTML = html;
+      }
+      renderDebugTable();
+      // Slicer interactivity
+      document.querySelectorAll('.quit-slicer-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.quit-slicer-btn').forEach(b=>b.classList.remove('active'));
+          if (!btn.classList.contains('clear')) {
+            btn.classList.add('active');
+            const step = decodeURIComponent(btn.getAttribute('data-step'));
+            renderDebugTable(step);
+          } else {
+            renderDebugTable();
+          }
+        });
+      });
+    }
+
+    function drawQuitBar(labels, data) {
+      // Sort descending by count
+      const zipped = labels.map((l,i)=>({label:l,count:data[i]}));
+      zipped.sort((a,b)=>b.count-a.count);
+      const sortedLabels = zipped.map(z=>z.label);
+      const sortedData = zipped.map(z=>z.count);
+      // Draw small chart in dashboard
+      const canvas = document.getElementById('quitPie');
+      if (canvas) {
+        canvas.width = Math.max(canvas.offsetWidth || 0, 320, 400);
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const barHeight = 22;
+        const gap = 12;
+        const chartHeight = sortedLabels.length * (barHeight + gap) + 10;
+        canvas.height = chartHeight;
+        const max = Math.max(...sortedData, 1);
+        const colors = ['#4f8cff','#ffb347','#7ed957','#e0e7ef','#ff6f91','#6fafff','#b2b7c6','#ffb3b3','#ff8c00','#00e6e6','#ff66cc'];
+        ctx.font = 'bold 1rem Orbitron, Arial, sans-serif';
+        ctx.textBaseline = 'middle';
+        for (let i=0; i<sortedLabels.length; i++) {
+          const y = 10 + i*(barHeight+gap);
+          const barLen = Math.max(10, (sortedData[i]/max)*(canvas.width-120));
+          ctx.save();
+          ctx.beginPath();
+          ctx.fillStyle = colors[i%colors.length];
+          ctx.shadowColor = colors[i%colors.length]+'99';
+          ctx.shadowBlur = 8;
+          ctx.fillRect(110, y, barLen, barHeight);
+          ctx.restore();
+          // Label
+          ctx.fillStyle = '#00f0ff';
+          ctx.shadowBlur = 0;
+          ctx.fillText(sortedLabels[i], 8, y+barHeight/2);
+          // Count
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 1.1rem Orbitron, Arial, sans-serif';
+          ctx.fillText(sortedData[i], 120+barLen, y+barHeight/2);
+        }
+      }
+      // Draw large horizontal bar chart after section title
+      const barCanvas = document.getElementById('quitPieLarge');
+      if (barCanvas) {
+        barCanvas.width = Math.max(barCanvas.offsetWidth || 0, 600, 600);
+        const ctx = barCanvas.getContext('2d');
+        ctx.clearRect(0, 0, barCanvas.width, barCanvas.height);
+        const barHeight = 36;
+        const gap = 16;
+        const leftPad = 220;
+        const chartHeight = sortedLabels.length * (barHeight + gap) + 30;
+        barCanvas.height = chartHeight;
+        const max = Math.max(...sortedData, 1);
+        const colors = ['#4f8cff','#ffb347','#7ed957','#e0e7ef','#ff6f91','#6fafff','#b2b7c6','#ffb3b3','#ff8c00','#00e6e6','#ff66cc'];
+        ctx.font = 'bold 1.1rem Orbitron, Arial, sans-serif';
+        ctx.textBaseline = 'middle';
+        let hoveredBar = -1;
+        barCanvas.onmousemove = function(e) {
+          const rect = barCanvas.getBoundingClientRect();
+          const mx = e.clientX - rect.left;
+          const my = e.clientY - rect.top;
+          let found = -1;
+          for (let i=0; i<sortedLabels.length; i++) {
+            const y = 18 + i*(barHeight+gap);
+            if (my >= y && my <= y+barHeight) { found = i; break; }
+          }
+          if (hoveredBar !== found) {
+            hoveredBar = found;
+            drawBars();
+          }
+        };
+        barCanvas.onmouseleave = function() { hoveredBar = -1; drawBars(); };
+        function drawBars() {
+          ctx.clearRect(0, 0, barCanvas.width, barCanvas.height);
+          for (let i=0; i<sortedLabels.length; i++) {
+            let y = 18 + i*(barHeight+gap);
+            let barH = barHeight;
+            let barL = Math.max(30, (sortedData[i]/max)*(barCanvas.width-leftPad-80));
+            // If hovered, make the bar bigger
+            if (hoveredBar === i) {
+              y -= 4;
+              barH += 8;
+              barL += 18;
+            }
+            // Label (left, vertically centered, ellipsis if needed)
+            ctx.save();
+            ctx.fillStyle = hoveredBar === i ? '#fff' : '#00f0ff';
+            ctx.shadowBlur = hoveredBar === i ? 16 : 0;
+            ctx.shadowColor = hoveredBar === i ? '#00f0ff' : 'transparent';
+            ctx.font = 'bold 1.1rem Orbitron, Arial, sans-serif';
+            ctx.textAlign = 'right';
+            let label = sortedLabels[i];
+            let maxLabelWidth = leftPad-18;
+            if (ctx.measureText(label).width > maxLabelWidth) {
+              while (label.length > 0 && ctx.measureText(label + '...').width > maxLabelWidth) {
+                label = label.slice(0, -1);
+              }
+              label = label + '...';
+            }
+            ctx.fillText(label, leftPad-18, y+barH/2);
+            ctx.restore();
+            // Bar
+            ctx.save();
+            ctx.beginPath();
+            ctx.fillStyle = colors[i%colors.length];
+            ctx.shadowColor = colors[i%colors.length]+'99';
+            ctx.shadowBlur = hoveredBar === i ? 24 : 10;
+            ctx.globalAlpha = hoveredBar === i ? 1 : 0.92;
+            ctx.fillRect(leftPad, y, barL, barH);
+            ctx.restore();
+            // Count (right end of bar)
+            ctx.save();
+            ctx.fillStyle = hoveredBar === i ? '#00f0ff' : '#fff';
+            ctx.font = 'bold 1.1rem Orbitron, Arial, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.shadowBlur = hoveredBar === i ? 12 : 0;
+            ctx.shadowColor = hoveredBar === i ? '#00f0ff' : 'transparent';
+            ctx.fillText(sortedData[i], leftPad+barL+12, y+barH/2);
+            ctx.restore();
+          }
+        }
+        drawBars();
+      }
+    }
+
+    // --- Call quit dashboard after main fetch ---
+    fetch(normalMessagesUrl)
+      .then(res => res.text())
+      .then(csvText => {
+        const rows = parseCSV(csvText);
+        if (rows.length < 2) throw new Error('No data found in normal messages');
+        const header = rows[0];
+        const colIdx = {
+          userId: header.findIndex(h => h.trim().toLowerCase() === 'user id'),
+          user: header.findIndex(h => h.trim().toLowerCase() === 'user'),
+          response: header.findIndex(h => h.trim().toLowerCase() === 'response'),
+          timestamp: header.findIndex(h => h.trim().toLowerCase() === 'timestamp'),
+          messageContent: header.findIndex(h => h.trim().toLowerCase() === 'message content'),
+        };
+        const dataRows = rows.slice(1);
+        renderQuitDashboard(dataRows, colIdx);
+      })
+      .catch(err => {
+        document.getElementById('quit-dashboard').innerHTML = '';
+        document.getElementById('errorMsg').textContent = 'Failed to load normal messages for quit dashboard: ' + err.message;
       });
   </script>
 </body>
