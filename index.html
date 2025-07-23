@@ -565,6 +565,65 @@
       border-color: #fff;
       transform: translateY(-4px) scale(1.01);
     }
+    @media (max-width: 700px) {
+      #quitPieLarge {
+        width: 96vw !important;
+        max-width: 96vw !important;
+        min-width: 0 !important;
+        height: 120px !important;
+        min-height: 80px !important;
+        margin-left: 2vw !important;
+        margin-right: 2vw !important;
+      }
+      .quit-slicer-container {
+        gap: 3px;
+        padding: 0 2vw;
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
+      .quit-slicer-btn {
+        font-size: 0.72rem;
+        padding: 5px 7px 5px 7px;
+        border-radius: 7px;
+      }
+      .quit-slicer-count {
+        font-size: 0.7rem;
+        padding: 0 4px;
+      }
+      #quit-dashboard, #quit-debug {
+        padding: 0 2vw !important;
+        font-size: 0.7rem;
+        overflow-x: auto;
+        margin-left: 2vw;
+        margin-right: 2vw;
+      }
+      .quit-debug-table, .quit-summary-table {
+        font-size: 0.7rem;
+        min-width: 220px;
+        width: 100%;
+      }
+      .quit-debug-table th, .quit-debug-table td, .quit-summary-table th, .quit-summary-table td {
+        padding: 2px 3px;
+      }
+      .section-divider, #before-after-section, #quit-dashboard, #quit-debug {
+        max-width: 98vw !important;
+        margin-left: 1vw !important;
+        margin-right: 1vw !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .dashboard-card, .charts-panel {
+        max-width: 98vw !important;
+        margin-left: 1vw !important;
+        margin-right: 1vw !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .section-divider h2 {
+        font-size: 1.05rem !important;
+        padding: 7px 0 2px 0 !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -650,10 +709,14 @@
     </div>
   </div>
   <div class="section-divider">
+    <h2>Daily Dashboard</h2>
+  </div>
+  <div id="daily-dashboard-section" style="width:100vw;max-width:1200px;margin:0 auto 32px auto;padding:0 16px;box-sizing:border-box;"></div>
+  <div class="section-divider">
     <h2>Where Customers Quit Booking</h2>
   </div>
   <div style="width:100vw;max-width:1200px;margin:0 auto 0 auto;padding:0 16px 0 16px;box-sizing:border-box;display:flex;justify-content:center;align-items:center;">
-    <canvas id="quitPieLarge" width="600" height="320" style="width:100%;max-width:600px;min-height:320px;display:block;margin:0 auto 8px auto;"></canvas>
+    <canvas id="quitPieLarge" width="600" height="320" style="width:100%;max-width:600px;min-height:320px;display:block;margin:0 auto 0 auto;"></canvas>
   </div>
   <div id="quit-dashboard" style="width:100vw;max-width:1200px;margin:0 auto 24px auto;padding:0 16px;box-sizing:border-box;"></div>
   <div id="quit-debug" style="width:100vw;max-width:1200px;margin:0 auto 24px auto;padding:0 16px;box-sizing:border-box;"></div>
@@ -1251,14 +1314,14 @@
       // Bar chart
       drawQuitBar(quitLabels, quitData);
       // Table (now slicer)
-      let slicerHtml = `<div class='quit-slicer-container'>`;
+      let slicerHtml = `<div class='quit-slicer-container' style='margin-top:0;margin-bottom:0;'>`;
       quitLabels.forEach((l,i)=>{
         slicerHtml += `<button class='quit-slicer-btn' data-step="${encodeURIComponent(l)}">${l} <span class='quit-slicer-count'>${quitData[i]}</span></button>`;
       });
       slicerHtml += `<button class='quit-slicer-btn clear' id='quitSlicerClear' style='margin-left:18px;'>Show All</button></div>`;
-      document.getElementById('quit-dashboard').innerHTML = `<canvas id='quitPie' width='220' height='120'></canvas>`+slicerHtml;
+      document.getElementById('quit-dashboard').innerHTML = `<canvas id='quitPie' width='220' height='120' style='display:none;'></canvas>`+slicerHtml;
       // Debug table (unchanged, but will filter)
-      let debugHtml = `<table class='quit-debug-table' id='quitDebugTable'><tr><th>User</th><th>Chat ID</th><th>Start Time</th><th>Quit Step</th><th>Last Message</th></tr>`;
+      let debugHtml = `<table class='quit-debug-table' id='quitDebugTable'><tr><th>User</th><th>Chat ID</th><th>Quit Step</th><th>Last Message</th></tr>`;
       const ignoreMsgs = [
         '/start',
         '💕 How it Works',
@@ -1288,7 +1351,7 @@
         }
       });
       function renderDebugTable(filterStep) {
-        let html = `<table class='quit-debug-table' id='quitDebugTable'><tr><th>User</th><th>Chat ID</th><th>Start Time</th><th>Quit Step</th><th>Last Message</th></tr>`;
+        let html = `<table class='quit-debug-table' id='quitDebugTable'><tr><th>User</th><th>Chat ID</th><th>Quit Step</th><th>Last Message</th></tr>`;
         debugRows.forEach(row => {
           // Exclude rows with ignored lastMsg
           const ignored = [
@@ -1320,10 +1383,10 @@
           } else if (filterStep && row.quit !== filterStep) {
             return;
           }
-          html += `<tr><td>${row.uid}</td><td>${row.chatId||''}</td><td>${row.ts||''}</td><td class='quit-debug-step'>${row.quit}</td><td class='quit-debug-msg'>${lastMsg}</td></tr>`;
+          html += `<tr><td>${row.uid}</td><td>${row.chatId||''}</td><td class='quit-debug-step'>${row.quit}</td><td class='quit-debug-msg'>${lastMsg}</td></tr>`;
         });
         // Add extra space at the end
-        html += `<tr><td colspan='5' style='height:48px;background:none;border:none;'></td></tr>`;
+        html += `<tr><td colspan='4' style='height:48px;background:none;border:none;'></td></tr>`;
         html += `</table>`;
         document.getElementById('quit-debug').innerHTML = html;
       }
@@ -1386,17 +1449,22 @@
       // Draw large horizontal bar chart after section title
       const barCanvas = document.getElementById('quitPieLarge');
       if (barCanvas) {
-        barCanvas.width = Math.max(barCanvas.offsetWidth || 0, 600, 600);
+        let isMobile = window.innerWidth < 700;
+        const barHeight = isMobile ? 14 : 36;
+        const gap = isMobile ? 4 : 16;
+        const leftPad = isMobile ? 48 : 220;
+        if (isMobile) {
+          barCanvas.width = Math.max(barCanvas.offsetWidth || 0, window.innerWidth*0.96, 160);
+          barCanvas.height = 120;
+        } else {
+          barCanvas.width = Math.max(barCanvas.offsetWidth || 0, 600, 600);
+          barCanvas.height = sortedLabels.length * (barHeight + gap) + 30;
+        }
         const ctx = barCanvas.getContext('2d');
         ctx.clearRect(0, 0, barCanvas.width, barCanvas.height);
-        const barHeight = 36;
-        const gap = 16;
-        const leftPad = 220;
-        const chartHeight = sortedLabels.length * (barHeight + gap) + 30;
-        barCanvas.height = chartHeight;
         const max = Math.max(...sortedData, 1);
         const colors = ['#4f8cff','#ffb347','#7ed957','#e0e7ef','#ff6f91','#6fafff','#b2b7c6','#ffb3b3','#ff8c00','#00e6e6','#ff66cc'];
-        ctx.font = 'bold 1.1rem Orbitron, Arial, sans-serif';
+        ctx.font = isMobile ? 'bold 0.62rem Orbitron, Arial, sans-serif' : 'bold 1.1rem Orbitron, Arial, sans-serif';
         ctx.textBaseline = 'middle';
         let hoveredBar = -1;
         barCanvas.onmousemove = function(e) {
@@ -1405,7 +1473,7 @@
           const my = e.clientY - rect.top;
           let found = -1;
           for (let i=0; i<sortedLabels.length; i++) {
-            const y = 18 + i*(barHeight+gap);
+            const y = isMobile ? 4 + i*(barHeight+gap) : 18 + i*(barHeight+gap);
             if (my >= y && my <= y+barHeight) { found = i; break; }
           }
           if (hoveredBar !== found) {
@@ -1417,9 +1485,9 @@
         function drawBars() {
           ctx.clearRect(0, 0, barCanvas.width, barCanvas.height);
           for (let i=0; i<sortedLabels.length; i++) {
-            let y = 18 + i*(barHeight+gap);
+            let y = isMobile ? 4 + i*(barHeight+gap) : 18 + i*(barHeight+gap);
             let barH = barHeight;
-            let barL = Math.max(30, (sortedData[i]/max)*(barCanvas.width-leftPad-80));
+            let barL = Math.max(10, (sortedData[i]/max)*(barCanvas.width-leftPad-10));
             // If hovered, make the bar bigger
             if (hoveredBar === i) {
               y -= 4;
@@ -1434,14 +1502,14 @@
             ctx.font = 'bold 1.1rem Orbitron, Arial, sans-serif';
             ctx.textAlign = 'right';
             let label = sortedLabels[i];
-            let maxLabelWidth = leftPad-18;
+            let maxLabelWidth = leftPad-4;
             if (ctx.measureText(label).width > maxLabelWidth) {
               while (label.length > 0 && ctx.measureText(label + '...').width > maxLabelWidth) {
                 label = label.slice(0, -1);
               }
               label = label + '...';
             }
-            ctx.fillText(label, leftPad-18, y+barH/2);
+            ctx.fillText(label, leftPad-4, y+barH/2);
             ctx.restore();
             // Bar
             ctx.save();
@@ -1459,7 +1527,7 @@
             ctx.textAlign = 'left';
             ctx.shadowBlur = hoveredBar === i ? 12 : 0;
             ctx.shadowColor = hoveredBar === i ? '#00f0ff' : 'transparent';
-            ctx.fillText(sortedData[i], leftPad+barL+12, y+barH/2);
+            ctx.fillText(sortedData[i], leftPad+barL+4, y+barH/2);
             ctx.restore();
           }
         }
@@ -1488,6 +1556,139 @@
         document.getElementById('quit-dashboard').innerHTML = '';
         document.getElementById('errorMsg').textContent = 'Failed to load normal messages for quit dashboard: ' + err.message;
       });
+
+    // --- Helper: Get today's date in JST (YYYY-MM-DD) ---
+    function getTodayJST() {
+      const now = new Date();
+      // Convert to JST
+      const jst = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+      return jst.getFullYear() + '-' + String(jst.getMonth()+1).padStart(2,'0') + '-' + String(jst.getDate()).padStart(2,'0');
+    }
+
+    // --- Render Daily Dashboard ---
+    function renderDailyDashboard(normalRows, bookingRows, colIdx) {
+      const today = getTodayJST();
+      // Filter normal messages for today (JST)
+      const todayMsgs = normalRows.filter(row => {
+        const ts = parseTimestamp(row[colIdx.timestamp]);
+        if (!ts) return false;
+        // Convert to JST
+        const jst = new Date(ts.getTime() + 9 * 60 * 60 * 1000);
+        const dstr = jst.getFullYear() + '-' + String(jst.getMonth()+1).padStart(2,'0') + '-' + String(jst.getDate()).padStart(2,'0');
+        return dstr === today;
+      });
+      // Total messages replied today
+      const repliedToday = todayMsgs.length;
+      // Unique customers today
+      const uniqueToday = new Set();
+      todayMsgs.forEach(row => {
+        let uid = row[colIdx.userId];
+        if (!uid || uid.trim() === '') uid = row[colIdx.user];
+        if (uid && uid.trim() !== '') uniqueToday.add(uid.trim());
+      });
+      // Bookings started today (🗓 Book a Girl)
+      const bookStartedToday = todayMsgs.filter(row => (row[colIdx.messageContent]||'').trim() === '🗓 Book a Girl').length;
+      // Bookings finished today (from booking sheet, filter by today JST)
+      const bookingHeader = bookingRows[0];
+      const bookingTsIdx = bookingHeader ? bookingHeader.findIndex(h => h.trim().toLowerCase().includes('timestamp')) : -1;
+      const bookingsToday = bookingRows.slice(1).filter(row => {
+        if (bookingTsIdx === -1) return false;
+        const ts = parseTimestamp(row[bookingTsIdx]);
+        if (!ts) return false;
+        const jst = new Date(ts.getTime() + 9 * 60 * 60 * 1000);
+        const dstr = jst.getFullYear() + '-' + String(jst.getMonth()+1).padStart(2,'0') + '-' + String(jst.getDate()).padStart(2,'0');
+        return dstr === today;
+      }).length;
+      // Booking conversion rate today
+      const conversionToday = bookStartedToday ? ((bookingsToday / bookStartedToday) * 100).toFixed(1) : '0.0';
+      // Peak hour today
+      const hours = Array(24).fill(0);
+      todayMsgs.forEach(row => {
+        const ts = parseTimestamp(row[colIdx.timestamp]);
+        if (!ts) return;
+        const jst = new Date(ts.getTime() + 9 * 60 * 60 * 1000);
+        hours[jst.getHours()]++;
+      });
+      const peakHour = hours.reduce((maxIdx, val, idx, arr) => val > arr[maxIdx] ? idx : maxIdx, 0);
+      // Most frequent customer request today
+      const bookingIntents = [
+        '💰 Check Pricing',
+        '💌 Option Pricing',
+        '🗓 Book a Girl',
+        '⚠️ Important Rules',
+        '👩 Talk to Real Staff',
+        '💕 How it Works',
+        '🚨 Start from Beginning'
+      ];
+      const msgCounts = {};
+      todayMsgs.forEach(row => {
+        const msg = (row[colIdx.messageContent]||'').trim();
+        if (bookingIntents.includes(msg)) {
+          msgCounts[msg] = (msgCounts[msg]||0)+1;
+        }
+      });
+      let topRequest = '';
+      let topRequestCount = 0;
+      Object.entries(msgCounts).forEach(([msg, count]) => {
+        if (count > topRequestCount) {
+          topRequest = msg;
+          topRequestCount = count;
+        }
+      });
+      // First and last message time today
+      let firstMsg = null, lastMsg = null;
+      todayMsgs.forEach(row => {
+        const ts = parseTimestamp(row[colIdx.timestamp]);
+        if (!ts) return;
+        if (!firstMsg || ts < firstMsg) firstMsg = ts;
+        if (!lastMsg || ts > lastMsg) lastMsg = ts;
+      });
+      // Format times as HH:mm (JST)
+      function fmtTime(ts) {
+        if (!ts) return '-';
+        const jst = new Date(ts.getTime() + 9 * 60 * 60 * 1000);
+        return String(jst.getHours()).padStart(2,'0') + ':' + String(jst.getMinutes()).padStart(2,'0');
+      }
+      // Render stat cards
+      let html = `<div class='dashboard-grid' style='margin-bottom:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px 24px;'>`;
+      html += `<div class='dashboard-card'><span class='stat-icon'>💬</span><span class='stat-title'>Total Messages Today</span><span class='stat-value'>${repliedToday}</span></div>`;
+      html += `<div class='dashboard-card'><span class='stat-icon'>👤</span><span class='stat-title'>Unique Customers Today</span><span class='stat-value'>${uniqueToday.size}</span></div>`;
+      html += `<div class='dashboard-card'><span class='stat-icon'>🗓️</span><span class='stat-title'>Bookings Started Today</span><span class='stat-value'>${bookStartedToday}</span></div>`;
+      html += `<div class='dashboard-card'><span class='stat-icon'>✅</span><span class='stat-title'>Bookings Finished Today</span><span class='stat-value'>${bookingsToday}</span></div>`;
+      html += `<div class='dashboard-card'><span class='stat-icon'>⏰</span><span class='stat-title'>Peak Hour Today</span><span class='stat-value'>${peakHour}:00</span></div>`;
+      html += `<div class='dashboard-card'><span class='stat-icon'>📊</span><span class='stat-title'>Top Request Today</span><span class='stat-value'>${topRequest || '-'}</span></div>`;
+      html += `</div>`;
+      // Ensure 6 cards for 3x2 grid (add empty if needed)
+      let cardCount = 0;
+      cardCount++;
+      cardCount++;
+      cardCount++;
+      cardCount++;
+      cardCount++;
+      cardCount++;
+      // If fewer than 6, add empty cards
+      while (cardCount < 6) { html += `<div class='dashboard-card' style='background:none;box-shadow:none;border:none;'></div>`; cardCount++; }
+      document.getElementById('daily-dashboard-section').innerHTML = html;
+    }
+
+    // --- Fetch both sheets and render daily dashboard ---
+    Promise.all([
+      fetch(normalMessagesUrl).then(res => res.text()),
+      fetch(bookingConfirmationUrl).then(res => res.text())
+    ]).then(([normalCsv, bookingCsv]) => {
+      const normalRows = parseCSV(normalCsv);
+      const bookingRows = parseCSV(bookingCsv);
+      if (normalRows.length < 2) return;
+      const header = normalRows[0];
+      const colIdx = {
+        userId: header.findIndex(h => h.trim().toLowerCase() === 'user id'),
+        user: header.findIndex(h => h.trim().toLowerCase() === 'user'),
+        response: header.findIndex(h => h.trim().toLowerCase() === 'response'),
+        timestamp: header.findIndex(h => h.trim().toLowerCase() === 'timestamp'),
+        messageContent: header.findIndex(h => h.trim().toLowerCase() === 'message content'),
+      };
+      renderDailyDashboard(normalRows.slice(1), bookingRows, colIdx);
+    });
   </script>
 </body>
 </html> 
